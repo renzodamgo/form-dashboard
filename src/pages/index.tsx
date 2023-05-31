@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { questions } from "~/data/questions.data";
 
 type formTypes = {
@@ -28,6 +28,7 @@ const Home: NextPage = () => {
 
   const handleNames = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setFormData((formData) => ({ ...formData, [name]: value }));
   };
 
@@ -60,7 +61,7 @@ const Home: NextPage = () => {
     }));
   };
   useEffect(() => {
-    console.log({ ...formData.answers });
+    console.log({ ...formData });
   }, [formData]);
 
   return (
@@ -81,7 +82,39 @@ const Home: NextPage = () => {
             <br />
             <span className="text-[hsl(280,100%,70%)]">VAS-F</span>
           </h1>
-          <div className="grid gap-5">
+          <div className="grid gap-5 md:grid-cols-2">
+            <div
+              className={`grid rounded-lg bg-[hsl(0,0%,0%,0.33)] px-6 py-4 ring-2  ${
+                formData.name != "" ? "ring-green-500" : "ring-blue-500"
+              }`}
+            >
+              <h3 className="pb-2 text-2xl font-semibold tracking-tight">
+                Name
+              </h3>
+              <input
+                type="text"
+                className="rounded-lg bg-gray-100 px-2 py-1 text-black ring-2 ring-gray-300"
+                value={formData.name}
+                name="name"
+                onChange={handleNames}
+              />
+            </div>
+            <div
+              className={`grid rounded-lg bg-[hsl(0,0%,0%,0.33)] px-6 py-4 ring-2  ${
+                formData.lastName != "" ? "ring-green-500" : "ring-blue-500"
+              }`}
+            >
+              <h3 className="pb-2 text-2xl font-semibold tracking-tight">
+                Last Name
+              </h3>
+              <input
+                type="text"
+                className="rounded-lg bg-gray-100 px-2 py-1 text-black ring-2 ring-gray-300"
+                value={formData.lastName}
+                name="lastName"
+                onChange={handleNames}
+              />
+            </div>
             {questions.map((question, index) => (
               <div
                 key={index}
