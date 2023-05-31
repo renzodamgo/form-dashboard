@@ -13,10 +13,17 @@ type formTypes = {
 };
 
 const Home: NextPage = () => {
+  const answerArray = questions.map(({ questionId }) => {
+    return {
+      questionId,
+      answer: "",
+    };
+  });
+
   const [formData, setFormData] = useState<formTypes>({
     name: "",
     lastName: "",
-    answers: [],
+    answers: [...answerArray],
   });
 
   const handleNames = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,9 +86,7 @@ const Home: NextPage = () => {
               <div
                 key={index}
                 className={`rounded-lg bg-[hsl(0,0%,0%,0.33)] px-6 py-4 ring-2  ${
-                  formData.answers.find(
-                    (a) => question.questionId == a.questionId
-                  )
+                  formData.answers[index]?.answer != ""
                     ? "ring-green-500"
                     : "ring-blue-500"
                 }`}
@@ -104,7 +109,7 @@ const Home: NextPage = () => {
                 />
                 <div className="flex justify-between text-sm font-semibold text-white">
                   <p className="max-w-[180px]">{question.left}</p>
-                  <p className="max-w-[180px]">{question.rigth}</p>
+                  <p className="max-w-[180px] text-right">{question.rigth}</p>
                 </div>
               </div>
             ))}
