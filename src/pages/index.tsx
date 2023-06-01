@@ -127,6 +127,7 @@ const Home: NextPage = () => {
                 <h3 className="pb-4 text-2xl font-semibold tracking-tight">
                   {question.question}
                 </h3>
+                {formData.answers[index]?.answer}
                 <input
                   type="range"
                   min="0"
